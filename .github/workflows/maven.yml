@@ -21,7 +21,16 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: 'maven'
+          
+    - name: Get last tag
+      run: |
+          LAST_TAG=$(git describe --tags --abbrev=0)
+          echo "Last tag: $LAST_TAG"
 
+    - name: Get commit messages
+      run: |
+          git log $LAST_TAG..HEAD --no-decorate --pretty=format:"%s" > messages.txt
+          cat messages.txt
 
     - name: Build with Maven
       run: mvn -B package --file pom.xml
