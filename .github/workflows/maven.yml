@@ -19,6 +19,11 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
+      - name: Debug GitHub Event Data
+        run: |
+          echo "GitHub Event Before: ${{ github.event.before }}"
+          echo "GitHub SHA: ${{ github.sha }}"
+
       - name: Check commit messages
         run: |
           COMMIT_MSG=$(git log --format=%s ${{ github.event.before }}..${{ github.sha }} | grep -E "^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\(.+\))?!?: .*$")
