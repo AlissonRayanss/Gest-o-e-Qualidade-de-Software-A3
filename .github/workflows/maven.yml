@@ -25,7 +25,7 @@ jobs:
     - name: Get last tag
       run: |
           LAST_TAG=$(git describe --tags --abbrev=0)
-          echo "Last tag: $LAST_TAG"
+          echo "Last tag: $v1.0.0"
 
     - name: Get commit messages
       run: |
