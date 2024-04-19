@@ -21,7 +21,7 @@ jobs:
 
       - name: Check commit messages
         run: |
-          LAST_COMMIT=$(git rev-parse HEAD^)
+          LAST_COMMIT=$(git rev-list --max-parents=0 HEAD)
           COMMIT_MSG=$(git log --format=%s $LAST_COMMIT..HEAD | grep -E "^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\(.+\))?!?: .*$")
           if [ -z "$COMMIT_MSG" ]; then
             echo "Commit message validation failed."
