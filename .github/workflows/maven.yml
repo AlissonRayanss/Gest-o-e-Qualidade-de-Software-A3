@@ -19,12 +19,17 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
+      - name: Get last commit hash
+        run: |
+          LAST_COMMIT=$(git rev-list -n 1 HEAD^)
+          echo "Last commit hash: $LAST_COMMIT"
+
       - name: Check commit messages
         run: |
-          LAST_COMMIT=$(git rev-parse ${{ github.event.before }})
           COMMIT_MSG=$(git log --format=%s $LAST_COMMIT..HEAD | grep -E "^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\(.+\))?!?: .*$")
           if [ -z "$COMMIT_MSG" ]; then
             echo "Commit message validation failed."
+            exit 1
           fi
 
       - name: Run Tests
