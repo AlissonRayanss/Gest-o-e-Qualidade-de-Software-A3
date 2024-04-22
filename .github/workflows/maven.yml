@@ -34,7 +34,7 @@ jobs:
     - name: Get commit messages
       run: |
         git fetch --tags
-        git log v1.0.0..HEAD --no-decorate --pretty=format:"%s" > messages.txt
+        git log $LAST_TAG..HEAD --no-decorate --pretty=format:"%s" > messages.txt
         cat messages.txt
 
     - name: Build with Maven
@@ -42,4 +42,4 @@ jobs:
 
     - name: Check commit messages
       run: |
-        git log v1.0.0..${{ github.sha }} --format=%s | grep -E "^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\(.+\))?!?: .*$" 
+        git log $LAST_TAG..${{ github.sha }} --format=%s | grep -E "^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\(.+\))?!?: .*$" 
