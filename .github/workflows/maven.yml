@@ -31,9 +31,11 @@ jobs:
           LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
           echo "::set-output name=last_tag::$LAST_TAG"
       
+      - name: Fetch tags
+        run: git fetch --tags
+      
       - name: Get commit messages
         run: |
-          git fetch --tags
           git log ${{ steps.get_last_tag.outputs.last_tag }}..HEAD --no-decorate --pretty=format:"%s"
 
       - name: Build with Maven
@@ -41,4 +43,4 @@ jobs:
 
       - name: Check commit messages
         run: |
-          git log ${{ steps.get_last_tag.outputs.last_tag }}..5601f04908a1af553097227b54954f382b76d609 --format=%s | grep -E "^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\(.+\))?!?: .*$" 
+          git log ${{ steps.get_last_tag.outputs.last_tag }}..HEAD --format=%s | grep -E "^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\(.+\))?!?: .*$" 
