@@ -42,4 +42,4 @@ jobs:
 
     - name: Check commit messages
       run: |
-        git log $LAST_TAG..f91dd82fd390887c02ea05e11da5710ce79bac6e --format=%s | grep -E "^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\(.+\))?!?: .*$" 
+        git log v1.0.0..f91dd82fd390887c02ea05e11da5710ce79bac6e --format=%s | grep -E "^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\(.+\))?!?: .*$" 
