@@ -21,7 +21,10 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: 'maven'
-        
+     
+    - name: Run unit tests
+      run: mvn test 
+      
     - name: Get last tag
       id: get_last_tag
       run: |
@@ -35,9 +38,6 @@ jobs:
 
     - name: Build with Maven
       run: mvn -B package --file pom.xml
-
-    - name: Run unit tests
-      run: mvn test 
 
     - name: Check commit messages
       run: |
