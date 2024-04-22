@@ -41,10 +41,4 @@ jobs:
 
     - name: Check commit messages
       run: |
-        if [ "${{ github.event_name }}" == "pull_request" ]; then
-          git log --format=%s ${{ github.event.before }}..${{ github.sha }} | grep -E "^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\(.+\))?!?: .*$"
-        elif [ "${{ github.event_name }}" == "push" ]; then
-          git log --format=%s $LAST_TAG..HEAD --no-decorate --pretty=format:"%s" | grep -E "^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\(.+\))?!?: .*$"
-        else
-          echo "Unsupported event: ${{ github.event_name }}"
-        fi
+        git log --format=%s ${{ github.event.before }}..${{ github.sha }} | grep -E "^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\(.+\))?!?: .*$"
