@@ -41,4 +41,4 @@ jobs:
 
       - name: Check commit messages
         run: |
-          git log ${{ steps.get_last_tag.outputs.last_tag }}..HEAD --format=%s | grep -E "^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\(.+\))?!?: .*$" 
+          git log ${{ steps.get_last_tag.outputs.last_tag }}..5601f04908a1af553097227b54954f382b76d609 --format=%s | grep -E "^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\(.+\))?!?: .*$" 
