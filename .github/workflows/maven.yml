@@ -33,7 +33,8 @@ jobs:
       
     - name: Get commit messages
       run: |
-        git log ${{ github.event.before }}..${{ github.sha }} --no-decorate --pretty=format:"%s" > messages.txt
+        git fetch --tags
+        git log v1.0.0..HEAD --no-decorate --pretty=format:"%s" > messages.txt
         cat messages.txt
 
     - name: Build with Maven
