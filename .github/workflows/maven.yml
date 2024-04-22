@@ -40,6 +40,5 @@ jobs:
       run: mvn -B package --file pom.xml
 
     - name: Check commit messages
-      if: steps.get_last_tag.outputs.last_tag != 'v0.0.0'
       run: |
           git log --format=%s ${{ github.event.before }}..${{ github.sha }} | grep -E "^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\(.+\))?!?: .*$" 
