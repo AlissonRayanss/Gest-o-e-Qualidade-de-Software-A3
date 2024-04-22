@@ -13,33 +13,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Set up JDK 17
-      uses: actions/setup-java@v3
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-        cache: 'maven'
-     
-    - name: Run unit tests
-      run: mvn test 
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'maven'
+       
+      - name: Run unit tests
+        run: mvn test 
+          
+      - name: Get last tag
+        id: get_last_tag
+        run: |
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          echo "::set-output name=last_tag::$LAST_TAG"
       
-    - name: Get last tag
-      id: get_last_tag
-      run: |
-        LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
-        echo "::set-output name=last_tag::$LAST_TAG"
-      
-    - name: Get commit messages
-      run: |
-        git fetch --tags
-        git log $LAST_TAG..HEAD --no-decorate --pretty=format:"%s" > messages.txt
-        cat messages.txt
+      - name: Get commit messages
+        run: |
+          git fetch --tags
+          git log ${{ steps.get_last_tag.outputs.last_tag }}..HEAD --no-decorate --pretty=format:"%s"
 
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
 
-    - name: Check commit messages
-      run: |
-        git log v1.0.0..f91dd82fd390887c02ea05e11da5710ce79bac6e --format=%s | grep -E "^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\(.+\))?!?: .*$" 
+      - name: Check commit messages
+        run: |
+          git log ${{ steps.get_last_tag.outputs.last_tag }}..HEAD --format=%s | grep -E "^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\(.+\))?!?: .*$" 
