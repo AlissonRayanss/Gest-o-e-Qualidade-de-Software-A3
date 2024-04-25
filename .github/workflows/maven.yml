@@ -5,13 +5,10 @@ on:
     branches:
       - main
       - developer
-      - release
   pull_request:
     branches:
       - main
       - developer
-      - release
-
 jobs:
   build:
     runs-on: ubuntu-latest
