@@ -34,7 +34,7 @@ jobs:
       - name: Verify commit messages since last tag
         run: |
           LAST_TAG=$(echo "${{ steps.get_last_tag.outputs.last_tag }}")
-          git log --pretty=format:"%h - %s" $LAST_TAG..HEAD | grep -E '^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\(.*\))?!?: .*$' || (echo "Commit message validation failed" && exit 1)
+          git log --pretty=format:"%h - %s" <última-tag>..HEAD | grep -E '^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\(.*\))?!?: .*$' || (echo "Commit message validation failed" && exit 1)
 
   Build:
     runs-on: ubuntu-latest
