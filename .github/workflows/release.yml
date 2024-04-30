@@ -9,7 +9,24 @@ on:
       - release
 
 jobs:
+  preflight:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'adopt'
+
+    - name: Run preflight checks
+      run: mvn clean verify
+
   build:
+    needs: preflight
     runs-on: ubuntu-latest
 
     steps:
@@ -25,8 +42,22 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'adopt'
+
     - name: Run tests
       run: mvn test
 
     - name: Run integration tests
-      run: mvn verify
+      run: mvn test --file ProgramaTesteIntegracao.java
