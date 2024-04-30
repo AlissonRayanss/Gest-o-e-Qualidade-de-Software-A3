@@ -28,7 +28,7 @@ jobs:
         id: get_last_tag
         run: |
           git fetch --tags
-          LAST_TAG=$(git describe --tags --abbrev=0)
+          LAST_TAG=$(git describe --tags --abbrev=0 --always)
           echo "::set-output name=last_tag::$LAST_TAG"
       
       - name: Verify commit messages since last tag
