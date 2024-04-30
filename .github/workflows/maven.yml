@@ -32,6 +32,10 @@ jobs:
       
       - name: Fetch tags
         run: git fetch --tags
+        
+      - name: Verify commit messages since last tag
+        run: |
+          git log --pretty=format:"%h - %s" $v1.0.0..HEAD | grep -E '^(build|chore|CI|docs|feat|fix|perf|refactor|revert|style|test)(\(.*\))?!?: .*$' | | (echo "Commit message validation failed" && exit 1)
 
   Build:
     runs-on: ubuntu-latest
