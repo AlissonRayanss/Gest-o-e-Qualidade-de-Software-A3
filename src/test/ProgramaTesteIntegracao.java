@@ -1,57 +1,41 @@
 package test;
 
-import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import aplicacao.Programa;
 import entidades.Cliente;
 import entidades.GerenciarClientes;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.PrintStream;
+public class TesteIntegracao {
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.verify;
-
-public class ProgramaTesteIntegracao {
-
-    private final InputStream originalSystemIn = System.in;
-    private final PrintStream originalSystemOut = System.out;
-    private ByteArrayOutputStream mockOutput;
-    private GerenciarClientes gerenciadorClientesMock;
-    private Programa programa;
+    private GerenciarClientes sistema;
 
     @BeforeEach
     public void setUp() {
-        gerenciadorClientesMock = Mockito.mock(GerenciarClientes.class);
-        programa = new Programa();
-        programa.sistema = gerenciadorClientesMock;
-
-        mockOutput = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(mockOutput));
-    }
-
-    @AfterEach
-    public void tearDown() {
-        System.setIn(originalSystemIn);
-        System.setOut(originalSystemOut);
+        sistema = new GerenciarClientes();
     }
 
     @Test
-    public void testIntegracaoCadastroCliente() {
-        String input = "1\n12345678900\nJoão\njoao@example.com\nRua A\n123456789\n4\n";
-        ByteArrayInputStream mockInput = new ByteArrayInputStream(input.getBytes());
-        System.setIn(mockInput);
+    public void testCRUD() {
+        // Teste de Cadastro
+        Cliente cliente1 = new Cliente("12345678901", "João", "Rua A", 123456789, "joao@example.com");
+        sistema.cadastrarCliente(cliente1);
+        assertEquals(1, sistema.listarClientes().size());
 
-        programa.main(new String[]{});
+        // Teste de Consulta
+        Cliente clienteConsultado = sistema.consultarCliente("12345678901");
+        assertEquals("João", clienteConsultado.getNome());
 
-        verify(gerenciadorClientesMock).cadastrarCliente(new Cliente("Rua A", "João", "joao@example.com", "12345678900", "123456789"));
+        // Teste de Edição
+        Cliente clienteEditado = new Cliente("12345678901", "João Silva", "Rua B", 987654321, "joao.silva@example.com");
+        sistema.editarCliente("12345678901", clienteEditado);
+        clienteConsultado = sistema.consultarCliente("12345678901");
+        assertEquals("João Silva", clienteConsultado.getNome());
+        assertEquals("Rua B", clienteConsultado.getEndereco());
+        assertEquals(987654321, clienteConsultado.getTelefone());
 
-        String consoleOutput = mockOutput.toString();
-        assertEquals("Cliente cadastrado com sucesso!\nSaindo do programa...\n", consoleOutput);
+        // Teste de Exclusão
+        sistema.excluirCliente("12345678901");
+        assertEquals(0, sistema.listarClientes().size());
     }
-
 }
