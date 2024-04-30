@@ -39,15 +39,23 @@ jobs:
           
       - name: Verificar mensagens de commit
         run: |
+          INVALID_MESSAGES=()
           for COMMIT in $(git log v0.0.0..HEAD --format=%s); do
             echo "Verificando mensagem de commit: $COMMIT"
-            if [[ "$COMMIT" =~ ^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\(.+\))?!?: .*$ ]]; then
-              echo "Mensagem de commit válida: $COMMIT"
-            else
+            if ! [[ "$COMMIT" =~ ^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\(.+\))?!?: .*$ ]]; then
               echo "Mensagem de commit inválida: $COMMIT"
-              exit 1
+              INVALID_MESSAGES+=("$COMMIT")
             fi
-          done   
+          done
+          if [ ${#INVALID_MESSAGES[@]} -gt 0 ]; then
+            echo "Mensagens de commit inválidas encontradas:"
+            for INVALID_MESSAGE in "${INVALID_MESSAGES[@]}"; do
+              echo "- $INVALID_MESSAGE"
+            done
+            exit 1
+          else
+            echo "Todas as mensagens de commit são válidas."
+          fi
 
   Build:
     runs-on: ubuntu-latest
