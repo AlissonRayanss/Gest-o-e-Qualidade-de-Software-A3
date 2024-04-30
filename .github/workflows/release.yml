@@ -29,4 +29,4 @@ jobs:
       run: mvn test
 
     - name: Run integration tests
-      run: mvn verify
+      run: mvn test --file ProgramaTesteIntegracao.java
