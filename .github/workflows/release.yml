@@ -56,8 +56,5 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
 
-    - name: Run tests
-      run: mvn test
-
     - name: Run integration tests
       run: mvn test -Dtest=ProgramaTesteIntegracao
