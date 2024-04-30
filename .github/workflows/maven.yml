@@ -39,7 +39,7 @@ jobs:
           
       - name: Verificar mensagens de commit
         run: |
-          for COMMIT in $(git log ${{ steps.get_last_tag.outputs.last_tag }}..HEAD --format=%s); do
+          for COMMIT in $(git log v0.0.0..HEAD --format=%s); do
             echo "Verificando mensagem de commit: $COMMIT"
             if [[ "$COMMIT" =~ ^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\(.+\))?!?: .*$ ]]; then
               echo "Mensagem de commit válida: $COMMIT"
