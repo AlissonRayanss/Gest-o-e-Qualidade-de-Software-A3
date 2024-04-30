@@ -11,7 +11,7 @@ on:
       - developer
 
 jobs:
-  Prelight:
+  Preflight:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,6 +23,7 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: 'maven'
+          
       - name: Get last tag
         id: get_last_tag
         run: |
@@ -36,21 +37,21 @@ jobs:
         run: |
           git log ${{ steps.get_last_tag.outputs.last_tag }}..HEAD --no-decorate --pretty=format:"%s"    
           
-      - name: Check commit messages
+      - name: Verificar mensagens de commit
         run: |
-         for COMMIT in $(git log ${{ needs.Build.outputs.get_last_tag.outputs.last_tag }}..HEAD --format=%s); do
-           echo "Checking commit message: $COMMIT"
-           if [[ "$COMMIT" =~ ^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\(.+\))?!?: .*$ ]]; then
-           echo "Valid commit message: $COMMIT"
-         else
-         echo "Invalid commit message: $COMMIT"
-         exit 1
-         fi
-         done   
+          for COMMIT in $(git log ${{ steps.get_last_tag.outputs.last_tag }}..HEAD --format=%s); do
+            echo "Verificando mensagem de commit: $COMMIT"
+            if [[ "$COMMIT" =~ ^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\(.+\))?!?: .*$ ]]; then
+              echo "Mensagem de commit válida: $COMMIT"
+            else
+              echo "Mensagem de commit inválida: $COMMIT"
+              exit 1
+            fi
+          done   
 
   Build:
     runs-on: ubuntu-latest
-    needs: Prelight
+    needs: Preflight
 
     steps:
       - uses: actions/checkout@v2
