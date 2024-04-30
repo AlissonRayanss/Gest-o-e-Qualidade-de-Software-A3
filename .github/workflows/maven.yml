@@ -38,7 +38,7 @@ jobs:
           INVALID_MESSAGES=()
           for COMMIT in $(git log v0.0.0..HEAD --format=%s); do
             echo "Verificando mensagem de commit: $COMMIT"
-            if ! echo "$COMMIT" | grep -E "^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\([^)]+\))?: .*$" >/dev/null; then
+            if ! echo "$COMMIT" | grep -E "^(build|chore|CI|docs|feat|fix|perf|refactor|revert|style|test)(\([^)]+\))?: .*$" >/dev/null; then
               echo "Mensagem de commit inválida: $COMMIT"
               INVALID_MESSAGES+=("$COMMIT")
             fi
