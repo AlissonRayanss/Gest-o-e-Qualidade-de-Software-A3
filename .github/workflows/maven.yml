@@ -32,26 +32,11 @@ jobs:
       
       - name: Fetch tags
         run: git fetch --tags
-      
-      - name: Verificar mensagens de commit
+
+      - name: Verify commit messages since last tag
         run: |
-          INVALID_MESSAGES=()
-          for COMMIT in $(git log v0.0.0..HEAD --format=%s); do
-            echo "Verificando mensagem de commit: $COMMIT"
-            if ! echo "$COMMIT" | grep -E "^(build|chore|CI|docs|feat|fix|perf|refactor|revert|style|test)(\([^)]+\))?: .*$" >/dev/null; then
-              echo "Mensagem de commit inválida: $COMMIT"
-              INVALID_MESSAGES+=("$COMMIT")
-            fi
-          done
-          if [ ${#INVALID_MESSAGES[@]} -gt 0 ]; then
-            echo "Mensagens de commit inválidas encontradas:"
-            for INVALID_MESSAGE in "${INVALID_MESSAGES[@]}"; do
-              echo "- $INVALID_MESSAGE"
-            done
-            exit 1
-          else
-            echo "Todas as mensagens de commit são válidas."
-          fi
+          LAST_TAG=$(echo "${{ steps.get_last_tag.outputs.last_tag }}")
+          git log --pretty=format:"%h - %s" $LAST_TAG..HEAD | grep -E '^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\(.*\))?!?: .*$' || (echo "Commit message validation failed" && exit 1)
 
   Build:
     runs-on: ubuntu-latest
