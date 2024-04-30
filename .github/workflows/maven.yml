@@ -23,6 +23,30 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: 'maven'
+      - name: Get last tag
+        id: get_last_tag
+        run: |
+          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          echo "::set-output name=last_tag::$LAST_TAG"
+      
+      - name: Fetch tags
+        run: git fetch --tags
+      
+      - name: Get commit messages
+        run: |
+          git log ${{ steps.get_last_tag.outputs.last_tag }}..HEAD --no-decorate --pretty=format:"%s"    
+          
+      - name: Check commit messages
+        run: |
+         for COMMIT in $(git log ${{ needs.Build.outputs.get_last_tag.outputs.last_tag }}..HEAD --format=%s); do
+           echo "Checking commit message: $COMMIT"
+           if [[ "$COMMIT" =~ ^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\(.+\))?!?: .*$ ]]; then
+           echo "Valid commit message: $COMMIT"
+         else
+         echo "Invalid commit message: $COMMIT"
+         exit 1
+         fi
+         done   
 
   Build:
     runs-on: ubuntu-latest
@@ -37,19 +61,6 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: 'maven'
-       
-      - name: Get last tag
-        id: get_last_tag
-        run: |
-          LAST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
-          echo "::set-output name=last_tag::$LAST_TAG"
-      
-      - name: Fetch tags
-        run: git fetch --tags
-      
-      - name: Get commit messages
-        run: |
-          git log ${{ steps.get_last_tag.outputs.last_tag }}..HEAD --no-decorate --pretty=format:"%s"
 
       - name: Build with Maven
         run: mvn -B package --file pom.xml
@@ -70,15 +81,3 @@ jobs:
 
       - name: Run unit tests
         run: mvn test 
-      
-      - name: Check commit messages
-        run: |
-          for COMMIT in $(git log ${{ needs.Build.outputs.get_last_tag.outputs.last_tag }}..HEAD --format=%s); do
-            echo "Checking commit message: $COMMIT"
-            if [[ $COMMIT =~ ^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\(.+\))?!?: .*$ ]]; then
-              echo "Valid commit message: $COMMIT"
-            else
-              echo "Invalid commit message: $COMMIT"
-              exit 1
-            fi
-          done
