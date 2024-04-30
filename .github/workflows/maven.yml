@@ -33,16 +33,12 @@ jobs:
       - name: Fetch tags
         run: git fetch --tags
       
-      - name: Get commit messages
-        run: |
-          git log ${{ steps.get_last_tag.outputs.last_tag }}..HEAD --no-decorate --pretty=format:"%s"    
-          
       - name: Verificar mensagens de commit
         run: |
           INVALID_MESSAGES=()
           for COMMIT in $(git log v0.0.0..HEAD --format=%s); do
             echo "Verificando mensagem de commit: $COMMIT"
-            if ! [[ "$COMMIT" =~ ^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\([^)]+\))?: .*$ ]]; then
+            if ! echo "$COMMIT" | grep -E "^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\([^)]+\))?: .*$" >/dev/null; then
               echo "Mensagem de commit inválida: $COMMIT"
               INVALID_MESSAGES+=("$COMMIT")
             fi
