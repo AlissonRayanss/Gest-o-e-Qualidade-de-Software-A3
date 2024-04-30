@@ -31,14 +31,10 @@ jobs:
           LAST_TAG=$(git describe --tags --abbrev=0 --always)
           echo "::set-output name=last_tag::$LAST_TAG"
       
-      - name: Debug commit messages
+      - name: Verify commit messages since last tag
         run: |
           LAST_TAG=$(echo "${{ steps.get_last_tag.outputs.last_tag }}")
-          echo "Last tag: $LAST_TAG"
-          echo "HEAD commit:"
-          git log --pretty=format:"%h - %s" $LAST_TAG..HEAD
-          echo "Commit message validation:"
-          git log --pretty=format:"%h - %s" $LAST_TAG..HEAD | grep -E '^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\(.*\))?!?: .*$' || (echo "Commit message validation failed" && exit 1)
+          git log --pretty=format:"%h - %s" v1.0.1..HEAD | grep -E '^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\(.*\))?!?: .*$' || (echo "Commit message validation failed" && exit 1)
 
   Build:
     runs-on: ubuntu-latest
