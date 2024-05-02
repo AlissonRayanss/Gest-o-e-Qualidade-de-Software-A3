@@ -10,9 +10,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import entidades.Cliente;
-import entidades.GerenciarClientes;
-
 @ExtendWith(MockitoExtension.class)
 public class GerenciarClientesTest {
 
