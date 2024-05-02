@@ -26,7 +26,9 @@ jobs:
 
       - name: Verify commit messages
         run: |
-            git log --pretty=format:"%h - %s" --since=a61dc6b751ea24b7dea70d6593b7e02d3414b5cc | grep -E '^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)?: .*$' || (echo "Commit message validation failed" && exit 1)
+            commit_message=$(git log -1 --pretty=format:"%s")
+            echo "$commit_message" | grep -E '^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\(.+\))?!?: .+$' || (echo "Commit message validation failed" && exit 1)
+
 
   Build:
     runs-on: ubuntu-latest
