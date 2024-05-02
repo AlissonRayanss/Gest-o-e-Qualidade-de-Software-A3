@@ -12,7 +12,6 @@ import static org.mockito.Mockito.when;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 public class GerenciarClientesTest {
 
