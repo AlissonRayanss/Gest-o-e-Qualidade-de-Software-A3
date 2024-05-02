@@ -26,7 +26,7 @@ jobs:
 
       - name: Verify commit messages
         run: |
-          git log --pretty=format:"%h - %s" ${{ github.event.before }}..${{ github.sha }} | grep -E '^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\(.*\))?!?: .*$' || (echo "Commit message validation failed" && exit 1)
+           git log --pretty=format:"%h - %s" ed0c62009928484c89cc707fd2fc8a1e2eeefeb0..${{ github.sha }} | grep -E '^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\(.*\))?!?: .*$' || (echo "Commit message validation failed" && exit 1)
 
   Build:
     runs-on: ubuntu-latest
