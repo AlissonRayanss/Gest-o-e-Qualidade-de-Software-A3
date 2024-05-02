@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-public class GerenciarClientesTest {
+public class TesteUnitario {
 
     private GerenciarClientes gerenciador;
 
