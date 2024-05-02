@@ -16,7 +16,7 @@ import java.io.PrintStream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 
-public class ProgramaTesteIntegracao {
+public class TesteIntegracao {
 
     private final InputStream originalSystemIn = System.in;
     private final PrintStream originalSystemOut = System.out;
