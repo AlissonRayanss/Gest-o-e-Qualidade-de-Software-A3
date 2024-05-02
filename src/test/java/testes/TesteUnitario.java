@@ -20,12 +20,12 @@ public class ProgramaTeste {
     @Mock
     private GerenciarClientes gerenciadorClientes;
     private Programa programa;
-    
+
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
         programa = new Programa();
-        programa.sistema = gerenciadorClientes; 
+        programa.setSistema(gerenciadorClientes); // Corrigido para usar setSistema em vez de acessar diretamente a variável
     }
 
     @Test
@@ -155,5 +155,15 @@ public class ProgramaTeste {
     public void testBuscarClientePorTelefoneExistente() {
         Cliente cliente = new Cliente("Rua G", "Gustavo", "gustavo@example.com", "33333333333", "333333333");
         when(gerenciadorClientes.buscarClientePorTelefone("333333333")).thenReturn(cliente);
+
+        Cliente result = programa.buscarClientePorTelefone("333333333");
+
+        assertNotNull(result);
+        assertEquals("Gustavo", result.getNome());
+        assertEquals("Rua G", result.getEndereco());
+        assertEquals("gustavo@example.com", result.getEmail());
+        assertEquals("33333333333", result.getCpf());
+        assertEquals("333333333", result.getTelefone());
+        verify(gerenciadorClientes, times(1)).buscarClientePorTelefone("333333333");
     }
 }
