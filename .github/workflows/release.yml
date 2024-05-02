@@ -39,8 +39,22 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
 
-    - name: run tests
-      run: mvn test -e
-      
+    - name: Run unit tests
+      run: mvn test -B
+
+  integration-test:
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up JDK
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'adopt'
+
     - name: Run integration tests
       run: mvn test -Dtest=ProgramaTesteIntegracao
