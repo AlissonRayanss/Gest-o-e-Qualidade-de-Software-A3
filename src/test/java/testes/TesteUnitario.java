@@ -83,3 +83,4 @@ public class GerenciarClientesTest {
         when(gerenciadorMock.consultarCliente("999999999")).thenReturn(null);
         assertNull(gerenciadorMock.consultarCliente("999999999"));
     }
+}
