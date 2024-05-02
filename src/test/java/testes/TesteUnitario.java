@@ -13,7 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
-public class GerenciarClientesTest {
+public class TesteUnitario {
 
     private GerenciarClientes gerenciador;
 
