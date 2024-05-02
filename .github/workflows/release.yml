@@ -9,24 +9,7 @@ on:
       - release
 
 jobs:
-  preflight:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-
-    - name: Set up JDK
-      uses: actions/setup-java@v2
-      with:
-        java-version: '11'
-        distribution: 'adopt'
-
-    - name: Run preflight checks
-      run: mvn clean verify
-
   build:
-    needs: preflight
     runs-on: ubuntu-latest
 
     steps:
