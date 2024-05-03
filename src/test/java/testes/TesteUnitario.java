@@ -21,13 +21,13 @@ public class TesteUnitario {
     }
     
     @Test
-    public void testCadastrarCliente() {
+    public Cliente testCadastrarCliente() {
         Cliente cliente = new Cliente("12345678900", "João", "Rua A", "123456789", "joao@example.com");
         sistema.cadastrarCliente(cliente);
     }
     
     @Test
-    public void testEditarCliente() {
+    public Cliente testEditarCliente() {
         Cliente clienteAtualizado = new Cliente("12345678900", "João da Silva", "Rua B", "987654321", "joao.silva@example.com");
         sistema.editarCliente(eq("12345678900"), clienteAtualizado);
     }
@@ -38,7 +38,7 @@ public class TesteUnitario {
     }
     
     @Test
-    public void testConsultarCliente() {
+    public Cliente testConsultarCliente() {
         Cliente cliente = new Cliente("12345678900", "João", "Rua A", "123456789", "joao@example.com");
         when(sistema.consultarCliente(eq("12345678900"))).thenReturn(cliente);
         
@@ -46,7 +46,7 @@ public class TesteUnitario {
     }
     
     @Test
-    public void testListarClientes() {
+    public Cliente testListarClientes() {
         List<Cliente> clientes = new ArrayList<>();
         clientes.add(new Cliente("12345678900", "João", "Rua A", "123456789", "joao@example.com"));
         when(sistema.listarClientes()).thenReturn(clientes);
