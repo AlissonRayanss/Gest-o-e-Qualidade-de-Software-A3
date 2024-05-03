@@ -1,9 +1,9 @@
 package test;
 
-import entidades.Cliente;
-import entidades.GerenciarClientes;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,7 +14,7 @@ import entidades.Cliente;
 import entidades.GerenciarClientes;
 
 @ExtendWith(MockitoExtension.class)
-public class GerenciarClientes {
+public class GerenciarClientesTest {
 
     private GerenciarClientes gerenciador;
 
@@ -27,16 +27,14 @@ public class GerenciarClientes {
     }
 
     @Test
-public void testCadastrarCliente() {
-    GerenciadorDeClientes gerenciadorMock = mock(GerenciadorDeClientes.class);
+    public void testCadastrarCliente() {
+        Cliente cliente = new Cliente("123456789", "Fulano", "Rua A", 1234567890, "fulano@example.com");
 
-    Cliente cliente = new Cliente("123456789", "Fulano", "Rua A", 1234567890, "fulano@example.com");
+        gerenciador.cadastrarCliente(cliente);
+        verify(gerenciador).cadastrarCliente(cliente);
 
-    gerenciadorMock.cadastrarCliente(cliente);
-    verify(gerenciadorMock).cadastrarCliente(cliente);
-
-    assertEquals(1, gerenciadorMock.getClientes().size());
-}
+        assertEquals(1, gerenciador.getClientes().size());
+    }
 
     @Test
 public void testEditarCliente() {
@@ -139,5 +137,5 @@ public void testListarClientesVazio() {
     verify(gerenciadorMock).listarClientes();
 
     assertEquals("Nenhum cliente cadastrado.", gerenciadorMock.listarClientes());
-}
+    }
 }
