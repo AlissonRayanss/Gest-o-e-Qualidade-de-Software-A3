@@ -1,4 +1,4 @@
-package teste;
+package testes;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -13,7 +13,7 @@ import aplicacao.Programa;
 import entidades.Cliente;
 import entidades.GerenciarClientes;
 
-public class ProgramaTeste {
+public class TesteUnitario {
     private GerenciarClientes sistema;
     private Programa programa;
     
