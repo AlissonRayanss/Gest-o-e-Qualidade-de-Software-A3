@@ -9,7 +9,6 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import aplicacao.Programa;
 import entidades.Cliente;
 import entidades.GerenciarClientes;
 
@@ -86,7 +85,7 @@ public class TesteUnitario {
         List<Cliente> clientes = new ArrayList<>();
         when(sistema.listarClientes()).thenReturn(clientes);
         
-        assertTrue(GerenciarClientes.listarClientes(sistema).isEmpty());
+        assertTrue(sistema.listarClientes().isEmpty());
         
         verify(sistema, times(1)).listarClientes();
     }
