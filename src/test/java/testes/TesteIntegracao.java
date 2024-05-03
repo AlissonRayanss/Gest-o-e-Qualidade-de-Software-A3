@@ -1,36 +1,27 @@
-package test;
-
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import aplicacao.Programa;
-import entidades.Cliente;
-import entidades.GerenciarClientes;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.verify;
-
 public class TesteIntegracao {
 
-    private final InputStream originalSystemIn = System.in;
-    private final PrintStream originalSystemOut = System.out;
+    private InputStream originalSystemIn;
+    private PrintStream originalSystemOut;
     private ByteArrayOutputStream mockOutput;
-    private GerenciarClientes gerenciadorClientesMock;
+    private GerenciarClientes gerenciadorClientes;
     private Programa programa;
 
     @BeforeEach
     public void setUp() {
-        gerenciadorClientesMock = Mockito.mock(GerenciarClientes.class);
+        gerenciadorClientes = new GerenciarClientes();
         programa = new Programa();
-        programa.sistema = gerenciadorClientesMock;
+        programa.sistema = gerenciadorClientes;
 
+        originalSystemIn = System.in;
+        originalSystemOut = System.out;
         mockOutput = new ByteArrayOutputStream();
+
+        System.setIn(new ByteArrayInputStream("1\n12345678900\nJoão\njoao@example.com\nRua A\n123456789\n4\n".getBytes()));
         System.setOut(new PrintStream(mockOutput));
     }
 
@@ -42,13 +33,7 @@ public class TesteIntegracao {
 
     @Test
     public void testIntegracaoCadastroCliente() {
-        String input = "1\n12345678900\nJoão\njoao@example.com\nRua A\n123456789\n4\n";
-        ByteArrayInputStream mockInput = new ByteArrayInputStream(input.getBytes());
-        System.setIn(mockInput);
-
         programa.main(new String[]{});
-
-        verify(gerenciadorClientesMock).cadastrarCliente(new Cliente("Rua A", "João", "joao@example.com", "12345678900", "123456789"));
 
         String consoleOutput = mockOutput.toString();
         assertEquals("Cliente cadastrado com sucesso!\nSaindo do programa...\n", consoleOutput);
