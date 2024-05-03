@@ -25,7 +25,7 @@ public class TesteUnitario {
     
     @Test
     public void testCadastrarCliente() {
-        Cliente cliente = new Cliente("12345678900", "João", "Rua A", 123456789, "joao@example.com");
+        Cliente cliente = new Cliente("12345678900", "João", "Rua A", "123456789", "joao@example.com");
         when(sistema.cadastrarCliente(any(Cliente.class))).thenReturn(true);
         
         assertTrue(GerenciarClientes.cadastrarCliente(sistema, cliente));
@@ -35,8 +35,8 @@ public class TesteUnitario {
     
     @Test
     public void testEditarCliente() {
-        Cliente clienteExistente = new Cliente("12345678900", "João", "Rua A", 123456789, "joao@example.com");
-        Cliente clienteAtualizado = new Cliente("12345678900", "João da Silva", "Rua B", 987654321, "joao.silva@example.com");
+        Cliente clienteExistente = new Cliente("12345678900", "João", "Rua A", "123456789", "joao@example.com");
+        Cliente clienteAtualizado = new Cliente("12345678900", "João da Silva", "Rua B", "987654321", "joao.silva@example.com");
         when(sistema.consultarCliente("12345678900")).thenReturn(clienteExistente);
         when(sistema.editarCliente(eq("12345678900"), any(Cliente.class))).thenReturn(true);
         
@@ -57,7 +57,7 @@ public class TesteUnitario {
     
     @Test
     public void testConsultarCliente() {
-        Cliente cliente = new Cliente("12345678900", "João", "Rua A", 123456789, "joao@example.com");
+        Cliente cliente = new Cliente("12345678900", "João", "Rua A", "123456789", "joao@example.com");
         when(sistema.consultarCliente("12345678900")).thenReturn(cliente);
         
         assertEquals(cliente, GerenciarClientes.consultarCliente(sistema, "12345678900"));
@@ -68,7 +68,7 @@ public class TesteUnitario {
     @Test
     public void testListarClientes() {
         List<Cliente> clientes = new ArrayList<>();
-        clientes.add(new Cliente("12345678900", "João", "Rua A", 123456789, "joao@example.com"));
+        clientes.add(new Cliente("12345678900", "João", "Rua A", "123456789", "joao@example.com"));
         when(sistema.listarClientes()).thenReturn(clientes);
         
         assertEquals(clientes, GerenciarClientes.listarClientes(sistema));
