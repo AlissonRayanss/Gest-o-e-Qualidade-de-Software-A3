@@ -27,14 +27,14 @@ public class GerenciarClientesTest {
     }
 
     @Test
-    public void testCadastrarCliente() {
+    public Cliente testCadastrarCliente() {
         Cliente cliente = new Cliente("123456789", "Fulano", "Rua A", 1234567890, "fulano@example.com");
         gerenciador.cadastrarCliente(cliente);
         assertEquals(1, gerenciador.getClientes().size());
     }
 
     @Test
-    public void testEditarCliente() {
+    public Cliente testEditarCliente() {
         Cliente clienteAntigo = new Cliente("123456789", "Fulano", "Rua A", 1234567890, "fulano@example.com");
         Cliente clienteNovo = new Cliente("123456789", "Beltrano", "Rua B", 987654321, "beltrano@example.com");
         gerenciador.cadastrarCliente(clienteAntigo);
@@ -43,7 +43,7 @@ public class GerenciarClientesTest {
     }
 
     @Test
-    public void testExcluirCliente() {
+    public Cliente testExcluirCliente() {
         Cliente cliente = new Cliente("123456789", "Fulano", "Rua A", 1234567890, "fulano@example.com");
         gerenciador.cadastrarCliente(cliente);
         gerenciador.excluirCliente("123456789");
@@ -51,14 +51,14 @@ public class GerenciarClientesTest {
     }
 
     @Test
-    public void testConsultarCliente() {
+    public Cliente testConsultarCliente() {
         Cliente cliente = new Cliente("123456789", "Fulano", "Rua A", 1234567890, "fulano@example.com");
         gerenciador.cadastrarCliente(cliente);
         assertEquals(cliente, gerenciador.consultarCliente("123456789"));
     }
 
     @Test
-    public void testListarClientes() {
+    public Cliente testListarClientes() {
         Cliente cliente1 = new Cliente("123456789", "Fulano", "Rua A", 1234567890, "fulano@example.com");
         Cliente cliente2 = new Cliente("987654321", "Beltrano", "Rua B", 987654321, "beltrano@example.com");
         gerenciador.cadastrarCliente(cliente1);
@@ -71,24 +71,24 @@ public class GerenciarClientesTest {
     }
 
     @Test
-    public void testConsultarClienteInexistente() {
+    public Cliente testConsultarClienteInexistente() {
         assertEquals(null, gerenciador.consultarCliente("999999999"));
     }
 
     @Test
-    public void testEditarClienteInexistente() {
+    public Cliente testEditarClienteInexistente() {
         gerenciador.editarCliente("999999999", clienteMock);
         assertEquals(0, gerenciador.getClientes().size());
     }
 
     @Test
-    public void testExcluirClienteInexistente() {
+    public Cliente testExcluirClienteInexistente() {
         gerenciador.excluirCliente("999999999");
         assertEquals(0, gerenciador.getClientes().size());
     }
 
     @Test
-    public void testListarClientesVazio() {
+    public Cliente testListarClientesVazio() {
         assertEquals("Nenhum cliente cadastrado.", gerenciador.listarClientes());
     }
 }
