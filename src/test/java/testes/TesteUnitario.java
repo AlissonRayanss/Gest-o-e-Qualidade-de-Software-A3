@@ -28,7 +28,7 @@ public class TesteUnitario {
         Cliente cliente = new Cliente("12345678900", "João", "Rua A", 123456789, "joao@example.com");
         when(sistema.cadastrarCliente(any(Cliente.class))).thenReturn(true);
         
-        assertTrue(programa.cadastrarCliente(sistema, cliente));
+        assertTrue(GerenciarClientes.cadastrarCliente(sistema, cliente));
         
         verify(sistema, times(1)).cadastrarCliente(any(Cliente.class));
     }
@@ -40,7 +40,7 @@ public class TesteUnitario {
         when(sistema.consultarCliente("12345678900")).thenReturn(clienteExistente);
         when(sistema.editarCliente(eq("12345678900"), any(Cliente.class))).thenReturn(true);
         
-        assertTrue(programa.editarCliente(sistema, "12345678900", clienteAtualizado));
+        assertTrue(GerenciarClientes.editarCliente(sistema, "12345678900", clienteAtualizado));
         
         verify(sistema, times(1)).consultarCliente("12345678900");
         verify(sistema, times(1)).editarCliente(eq("12345678900"), any(Cliente.class));
@@ -50,7 +50,7 @@ public class TesteUnitario {
     public void testExcluirCliente() {
         when(sistema.excluirCliente("12345678900")).thenReturn(true);
         
-        assertTrue(programa.excluirCliente(sistema, "12345678900"));
+        assertTrue(GerenciarClientes.excluirCliente(sistema, "12345678900"));
         
         verify(sistema, times(1)).excluirCliente("12345678900");
     }
@@ -60,7 +60,7 @@ public class TesteUnitario {
         Cliente cliente = new Cliente("12345678900", "João", "Rua A", 123456789, "joao@example.com");
         when(sistema.consultarCliente("12345678900")).thenReturn(cliente);
         
-        assertEquals(cliente, programa.consultarCliente(sistema, "12345678900"));
+        assertEquals(cliente, GerenciarClientes.consultarCliente(sistema, "12345678900"));
         
         verify(sistema, times(1)).consultarCliente("12345678900");
     }
@@ -71,7 +71,7 @@ public class TesteUnitario {
         clientes.add(new Cliente("12345678900", "João", "Rua A", 123456789, "joao@example.com"));
         when(sistema.listarClientes()).thenReturn(clientes);
         
-        assertEquals(clientes, programa.listarClientes(sistema));
+        assertEquals(clientes, GerenciarClientes.listarClientes(sistema));
         
         verify(sistema, times(1)).listarClientes();
     }
@@ -80,7 +80,7 @@ public class TesteUnitario {
     public void testConsultarClienteInexistente() {
         when(sistema.consultarCliente("12345678900")).thenReturn(null);
         
-        assertNull(programa.consultarCliente(sistema, "12345678900"));
+        assertNull(GerenciarClientes.consultarCliente(sistema, "12345678900"));
         
         verify(sistema, times(1)).consultarCliente("12345678900");
     }
@@ -89,7 +89,7 @@ public class TesteUnitario {
     public void testEditarClienteInexistente() {
         when(sistema.consultarCliente("12345678900")).thenReturn(null);
         
-        assertFalse(programa.editarCliente(sistema, "12345678900", new Cliente()));
+        assertFalse(GerenciarClientes.editarCliente(sistema, "12345678900", new Cliente()));
         
         verify(sistema, times(1)).consultarCliente("12345678900");
         verify(sistema, never()).editarCliente(anyString(), any(Cliente.class));
@@ -99,7 +99,7 @@ public class TesteUnitario {
     public void testExcluirClienteInexistente() {
         when(sistema.excluirCliente("12345678900")).thenReturn(false);
         
-        assertFalse(programa.excluirCliente(sistema, "12345678900"));
+        assertFalse(GerenciarClientes.excluirCliente(sistema, "12345678900"));
         
         verify(sistema, times(1)).excluirCliente("12345678900");
     }
@@ -109,7 +109,7 @@ public class TesteUnitario {
         List<Cliente> clientes = new ArrayList<>();
         when(sistema.listarClientes()).thenReturn(clientes);
         
-        assertTrue(programa.listarClientes(sistema).isEmpty());
+        assertTrue(GerenciarClientes.listarClientes(sistema).isEmpty());
         
         verify(sistema, times(1)).listarClientes();
     }
