@@ -21,32 +21,32 @@ public class TesteUnitario {
     }
     
     @Test
-    public Cliente testCadastrarCliente() {
+    public void testCadastrarCliente() {
         Cliente cliente = new Cliente("12345678900", "João", "Rua A", "123456789", "joao@example.com");
         sistema.cadastrarCliente(cliente);
     }
     
     @Test
-    public Cliente testEditarCliente() {
+    public void testEditarCliente() {
         Cliente clienteAtualizado = new Cliente("12345678900", "João da Silva", "Rua B", "987654321", "joao.silva@example.com");
-        sistema.editarCliente(eq("12345678900"), clienteAtualizado);
+        sistema.editarCliente("12345678900", clienteAtualizado);
     }
     
     @Test
-    public GerenciarClientes testExcluirCliente() {
-        sistema.excluirCliente(eq("12345678900"));
+    public void testExcluirCliente() {
+        sistema.excluirCliente("12345678900");
     }
     
     @Test
-    public Cliente testConsultarCliente() {
+    public void testConsultarCliente() {
         Cliente cliente = new Cliente("12345678900", "João", "Rua A", "123456789", "joao@example.com");
-        when(sistema.consultarCliente(eq("12345678900"))).thenReturn(cliente);
+        when(sistema.consultarCliente("12345678900")).thenReturn(cliente);
         
         assertEquals(cliente, sistema.consultarCliente("12345678900"));
     }
     
     @Test
-    public Cliente testListarClientes() {
+    public void testListarClientes() {
         List<Cliente> clientes = new ArrayList<>();
         clientes.add(new Cliente("12345678900", "João", "Rua A", "123456789", "joao@example.com"));
         when(sistema.listarClientes()).thenReturn(clientes);
@@ -55,33 +55,33 @@ public class TesteUnitario {
     }
     
     @Test
-    public Cliente testConsultarClienteInexistente() {
-        when(sistema.consultarCliente(eq("12345678900"))).thenReturn(null);
+    public void testConsultarClienteInexistente() {
+        when(sistema.consultarCliente("12345678900")).thenReturn(null);
         
         assertNull(sistema.consultarCliente("12345678900"));
     }
     
     @Test
-    public Cliente testEditarClienteInexistente() {
-        when(sistema.consultarCliente(eq("12345678900"))).thenReturn(null);
+    public void testEditarClienteInexistente() {
+        when(sistema.consultarCliente("12345678900")).thenReturn(null);
         
         assertFalse(GerenciarClientes.editarCliente(sistema, "12345678900", new Cliente()));
         
-        verify(sistema, times(1)).consultarCliente(eq("12345678900"));
+        verify(sistema, times(1)).consultarCliente("12345678900");
         verify(sistema, never()).editarCliente(anyString(), any(Cliente.class));
     }
     
     @Test
-    public GerenciarClientes testExcluirClienteInexistente() {
-        when(sistema.excluirCliente(eq("12345678900"))).thenReturn(false);
+    public void testExcluirClienteInexistente() {
+        when(sistema.excluirCliente("12345678900")).thenReturn(false);
         
         assertFalse(GerenciarClientes.excluirCliente(sistema, "12345678900"));
         
-        verify(sistema, times(1)).excluirCliente(eq("12345678900"));
+        verify(sistema, times(1)).excluirCliente("12345678900");
     }
     
     @Test
-    public Cliente testListarClientesVazio() {
+    public void testListarClientesVazio() {
         List<Cliente> clientes = new ArrayList<>();
         when(sistema.listarClientes()).thenReturn(clientes);
         
