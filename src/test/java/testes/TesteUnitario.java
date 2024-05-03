@@ -1,80 +1,143 @@
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+package test;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import entidades.Cliente;
+import entidades.GerenciarClientes;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import entidades.Cliente;
 import entidades.GerenciarClientes;
 
-public class TesteUnitario {
-    private GerenciarClientes sistema;
-    
+@ExtendWith(MockitoExtension.class)
+public class GerenciarClientesTest {
+
+    private GerenciarClientes gerenciador;
+
+    @Mock
+    private Cliente clienteMock;
+
     @BeforeEach
     public void setUp() {
-        sistema = new GerenciarClientes(); // Inicializa o objeto GerenciarClientes
+        gerenciador = new GerenciarClientes();
     }
-    
+
     @Test
-    public void testCadastrarCliente() {
-        Cliente cliente = new Cliente("12345678900", "João", "Rua A", "123456789", "joao@example.com");
-        sistema.cadastrarCliente(cliente);
-        
-        assertNotNull(sistema.consultarCliente("12345678900")); // Verifica se o cliente foi cadastrado corretamente
-    }
-    
+public void testCadastrarCliente() {
+    GerenciadorDeClientes gerenciadorMock = mock(GerenciadorDeClientes.class);
+
+    Cliente cliente = new Cliente("123456789", "Fulano", "Rua A", 1234567890, "fulano@example.com");
+
+    gerenciadorMock.cadastrarCliente(cliente);
+    verify(gerenciadorMock).cadastrarCliente(cliente);
+
+    assertEquals(1, gerenciadorMock.getClientes().size());
+}
+
     @Test
-    public void testEditarCliente() {
-        Cliente clienteAtualizado = new Cliente("12345678900", "João da Silva", "Rua B", "987654321", "joao.silva@example.com");
-        sistema.cadastrarCliente(new Cliente("12345678900", "João", "Rua A", "123456789", "joao@example.com"));
-        
-        assertTrue(sistema.editarCliente("12345678900", clienteAtualizado)); // Verifica se o cliente foi editado corretamente
-    }
-    
+public void testEditarCliente() {
+    GerenciadorDeClientes gerenciadorMock = mock(GerenciadorDeClientes.class);
+
+    Cliente clienteAntigo = new Cliente("123456789", "Fulano", "Rua A", 1234567890, "fulano@example.com");
+    Cliente clienteNovo = new Cliente("123456789", "Beltrano", "Rua B", 987654321, "beltrano@example.com");
+
+    gerenciadorMock.cadastrarCliente(clienteAntigo);
+
+    gerenciadorMock.editarCliente("123456789", clienteNovo);
+    verify(gerenciadorMock).editarCliente("123456789", clienteNovo);
+
+    assertEquals("Beltrano", gerenciadorMock.consultarCliente("123456789").getNome());
+}
+
     @Test
-    public void testExcluirCliente() {
-        sistema.cadastrarCliente(new Cliente("12345678900", "João", "Rua A", "123456789", "joao@example.com"));
-        
-        assertTrue(sistema.excluirCliente("12345678900")); // Verifica se o cliente foi excluído corretamente
-    }
+public void testExcluirCliente() {
+    GerenciadorDeClientes gerenciadorMock = mock(GerenciadorDeClientes.class);
     
+    Cliente cliente = new Cliente("123456789", "Fulano", "Rua A", 1234567890, "fulano@example.com");
+
+    gerenciadorMock.cadastrarCliente(cliente);
+
+    gerenciadorMock.excluirCliente("123456789");
+    verify(gerenciadorMock).excluirCliente("123456789");
+
+    assertEquals(0, gerenciadorMock.getClientes().size());
+}
+
     @Test
-    public void testConsultarCliente() {
-        Cliente cliente = new Cliente("12345678900", "João", "Rua A", "123456789", "joao@example.com");
-        sistema.cadastrarCliente(cliente);
-        
-        assertEquals(cliente, sistema.consultarCliente("12345678900")); // Verifica se o cliente foi consultado corretamente
-    }
-    
+public void testConsultarCliente() {
+    GerenciadorDeClientes gerenciadorMock = mock(GerenciadorDeClientes.class);
+
+    Cliente cliente = new Cliente("123456789", "Fulano", "Rua A", 1234567890, "fulano@example.com");
+
+    gerenciadorMock.cadastrarCliente(cliente);
+
+    gerenciadorMock.consultarCliente("123456789");
+    verify(gerenciadorMock).consultarCliente("123456789");
+
+    assertEquals(cliente, gerenciadorMock.consultarCliente("123456789"));
+}
+
     @Test
-    public void testListarClientes() {
-        List<Cliente> clientes = new ArrayList<>();
-        clientes.add(new Cliente("12345678900", "João", "Rua A", "123456789", "joao@example.com"));
-        sistema.cadastrarCliente(clientes.get(0));
-        
-        assertEquals(clientes, sistema.listarClientes()); // Verifica se a lista de clientes está correta
-    }
-    
+public void testListarClientes() {
+    GerenciadorDeClientes gerenciadorMock = mock(GerenciadorDeClientes.class);
+
+    Cliente cliente1 = new Cliente("123456789", "Fulano", "Rua A", 1234567890, "fulano@example.com");
+    Cliente cliente2 = new Cliente("987654321", "Beltrano", "Rua B", 987654321, "beltrano@example.com");
+
+    gerenciadorMock.cadastrarCliente(cliente1);
+    gerenciadorMock.cadastrarCliente(cliente2);
+
+    gerenciadorMock.listarClientes();
+    verify(gerenciadorMock).listarClientes();
+
+    String expected = "CPF: 123456789\n" + "Nome: Fulano\n" + "Telefone: 1234567890\n\n" + "CPF: 987654321\n"
+            + "Nome: Beltrano\n" + "Telefone: 987654321\n\n";
+    assertEquals(expected, gerenciadorMock.listarClientes());
+}
+
     @Test
-    public void testConsultarClienteInexistente() {
-        assertNull(sistema.consultarCliente("12345678900")); // Verifica se um cliente inexistente retorna null ao ser consultado
-    }
-    
+public void testConsultarClienteInexistente() {
+    GerenciadorDeClientes gerenciadorMock = mock(GerenciadorDeClientes.class);
+
+    gerenciadorMock.consultarCliente("999999999");
+    verify(gerenciadorMock).consultarCliente("999999999");
+
+    assertEquals(null, gerenciadorMock.consultarCliente("999999999"));
+}
+
     @Test
-    public void testEditarClienteInexistente() {
-        assertFalse(sistema.editarCliente("12345678900", new Cliente())); // Verifica se editar um cliente inexistente retorna false
-    }
-    
+public void testEditarClienteInexistente() {
+    GerenciadorDeClientes gerenciadorMock = mock(GerenciadorDeClientes.class);
+
+    Cliente clienteMock = mock(Cliente.class);
+
+    gerenciadorMock.editarCliente("999999999", clienteMock);
+    verify(gerenciadorMock).editarCliente("999999999", clienteMock);
+
+    assertEquals(0, gerenciadorMock.getClientes().size());
+}
+
     @Test
-    public void testExcluirClienteInexistente() {
-        assertFalse(sistema.excluirCliente("12345678900")); // Verifica se excluir um cliente inexistente retorna false
-    }
-    
+public void testExcluirClienteInexistente() {
+    GerenciadorDeClientes gerenciadorMock = mock(GerenciadorDeClientes.class);
+
+    gerenciadorMock.excluirCliente("999999999");
+    verify(gerenciadorMock).excluirCliente("999999999");
+
+    assertEquals(0, gerenciadorMock.getClientes().size());
+}
+
     @Test
-    public void testListarClientesVazio() {
-        assertTrue(sistema.listarClientes().isEmpty()); // Verifica se a lista de clientes está vazia
-    }
+public void testListarClientesVazio() {
+    GerenciadorDeClientes gerenciadorMock = mock(GerenciadorDeClientes.class);
+
+    gerenciadorMock.listarClientes();
+    verify(gerenciadorMock).listarClientes();
+
+    assertEquals("Nenhum cliente cadastrado.", gerenciadorMock.listarClientes());
+}
 }
