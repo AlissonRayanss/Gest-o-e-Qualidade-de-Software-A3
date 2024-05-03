@@ -23,15 +23,15 @@ public class TesteUnitario {
         programa = new Programa();
     }
     
-    @Test
-    public void testCadastrarCliente() {
-        Cliente cliente = new Cliente("12345678900", "João", "Rua A", "123456789", "joao@example.com");
-        when(sistema.cadastrarCliente(any(Cliente.class))).thenReturn(true);
-        
-        assertTrue(GerenciarClientes.cadastrarCliente(sistema, cliente));
-        
-        verify(sistema, times(1)).cadastrarCliente(any(Cliente.class));
-    }
+   @Test
+public void testCadastrarCliente() {
+    Cliente cliente = new Cliente("12345678900", "João", "Rua A", "123456789", "joao@example.com");
+    when(sistema.cadastrarCliente(any(Cliente.class))).thenReturn(true);
+
+    assertTrue(GerenciarClientes.cadastrarCliente(sistema, cliente));
+
+    verify(sistema, times(1)).cadastrarCliente(any(Cliente.class));
+}
     
     @Test
     public void testEditarCliente() {
