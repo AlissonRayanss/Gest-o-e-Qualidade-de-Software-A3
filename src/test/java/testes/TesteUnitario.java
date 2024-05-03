@@ -94,7 +94,7 @@ public class TesteUnitario {
         assertFalse(GerenciarClientes.excluirCliente(sistema, "12345678900"));
         
         verify(sistema, times(1)).consultarCliente("12345678900");
-        verify(sistema, never()).excluirCliente("12345678900");
+        verify(sistema, never()).excluirCliente(anyString());
     }
     
     @Test
