@@ -23,32 +23,23 @@ public class TesteUnitario {
         programa = new Programa();
     }
     
-   @Test
-public void testCadastrarCliente() {
-    Cliente cliente = new Cliente("12345678900", "João", "Rua A", "123456789", "joao@example.com");
-    when(sistema.cadastrarCliente(any(Cliente.class))).thenReturn(true);
-
-    assertTrue(sistema.cadastrarCliente(any(Cliente.class)));
-
-    verify(sistema, times(1)).cadastrarCliente(any(Cliente.class));
-}
+    @Test
+    public void testCadastrarCliente() {
+        Cliente cliente = new Cliente("12345678900", "João", "Rua A", "123456789", "joao@example.com");
+        programa.cadastrarCliente(cliente);
+        verify(sistema, times(1)).cadastrarCliente(cliente);
+    }
     
     @Test
     public void testEditarCliente() {
         Cliente clienteAtualizado = new Cliente("12345678900", "João da Silva", "Rua B", "987654321", "joao.silva@example.com");
-        when(sistema.editarCliente(eq("12345678900"), any(Cliente.class))).thenReturn(true);
-        
-        assertTrue(sistema.editarCliente(eq("12345678900"), any(Cliente.class)));
-        
-        verify(sistema, times(1)).editarCliente(eq("12345678900"), any(Cliente.class));
+        programa.editarCliente(clienteAtualizado);
+        verify(sistema, times(1)).editarCliente(eq("12345678900"), clienteAtualizado);
     }
     
     @Test
     public void testExcluirCliente() {
-        when(sistema.excluirCliente(eq("12345678900"))).thenReturn(true);
-        
-        assertTrue(sistema.excluirCliente(eq("12345678900")));
-        
+        programa.excluirCliente("12345678900");
         verify(sistema, times(1)).excluirCliente(eq("12345678900"));
     }
     
@@ -57,7 +48,7 @@ public void testCadastrarCliente() {
         Cliente cliente = new Cliente("12345678900", "João", "Rua A", "123456789", "joao@example.com");
         when(sistema.consultarCliente(eq("12345678900"))).thenReturn(cliente);
         
-        assertEquals(cliente, sistema.consultarCliente(eq("12345678900")));
+        assertEquals(cliente, programa.consultarCliente("12345678900"));
         
         verify(sistema, times(1)).consultarCliente(eq("12345678900"));
     }
@@ -68,7 +59,7 @@ public void testCadastrarCliente() {
         clientes.add(new Cliente("12345678900", "João", "Rua A", "123456789", "joao@example.com"));
         when(sistema.listarClientes()).thenReturn(clientes);
         
-        assertEquals(clientes, GerenciarClientes.listarClientes(sistema));
+        assertEquals(clientes, programa.listarClientes());
         
         verify(sistema, times(1)).listarClientes();
     }
@@ -77,7 +68,7 @@ public void testCadastrarCliente() {
     public void testConsultarClienteInexistente() {
         when(sistema.consultarCliente(eq("12345678900"))).thenReturn(null);
         
-        assertEquals(clientes, sistema.listarClientes());
+        assertNull(programa.consultarCliente("12345678900"));
         
         verify(sistema, times(1)).consultarCliente(eq("12345678900"));
     }
@@ -86,7 +77,7 @@ public void testCadastrarCliente() {
     public void testEditarClienteInexistente() {
         when(sistema.consultarCliente(eq("12345678900"))).thenReturn(null);
         
-        assertFalse(GerenciarClientes.editarCliente(sistema, "12345678900", new Cliente()));
+        assertFalse(programa.editarCliente("12345678900", new Cliente()));
         
         verify(sistema, times(1)).consultarCliente(eq("12345678900"));
         verify(sistema, never()).editarCliente(anyString(), any(Cliente.class));
@@ -96,7 +87,7 @@ public void testCadastrarCliente() {
     public void testExcluirClienteInexistente() {
         when(sistema.excluirCliente(eq("12345678900"))).thenReturn(false);
         
-        assertFalse(GerenciarClientes.excluirCliente(sistema, "12345678900"));
+        assertFalse(programa.excluirCliente("12345678900"));
         
         verify(sistema, times(1)).excluirCliente(eq("12345678900"));
     }
@@ -106,7 +97,7 @@ public void testCadastrarCliente() {
         List<Cliente> clientes = new ArrayList<>();
         when(sistema.listarClientes()).thenReturn(clientes);
         
-        assertTrue(GerenciarClientes.listarClientes(sistema).isEmpty());
+        assertTrue(programa.listarClientes().isEmpty());
         
         verify(sistema, times(1)).listarClientes();
     }
