@@ -14,7 +14,7 @@ import entidades.Cliente;
 import entidades.GerenciarClientes;
 
 @ExtendWith(MockitoExtension.class)
-public class GerenciarClientes.java {
+public class GerenciarClientes {
 
     private GerenciarClientes gerenciador;
 
