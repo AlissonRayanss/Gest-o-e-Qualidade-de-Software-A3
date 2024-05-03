@@ -33,7 +33,7 @@ public class TesteUnitario {
     }
     
     @Test
-    public void testExcluirCliente() {
+    public GerenciarClientes testExcluirCliente() {
         sistema.excluirCliente(eq("12345678900"));
     }
     
@@ -55,14 +55,14 @@ public class TesteUnitario {
     }
     
     @Test
-    public void testConsultarClienteInexistente() {
+    public Cliente testConsultarClienteInexistente() {
         when(sistema.consultarCliente(eq("12345678900"))).thenReturn(null);
         
         assertNull(sistema.consultarCliente("12345678900"));
     }
     
     @Test
-    public void testEditarClienteInexistente() {
+    public Cliente testEditarClienteInexistente() {
         when(sistema.consultarCliente(eq("12345678900"))).thenReturn(null);
         
         assertFalse(GerenciarClientes.editarCliente(sistema, "12345678900", new Cliente()));
@@ -72,7 +72,7 @@ public class TesteUnitario {
     }
     
     @Test
-    public void testExcluirClienteInexistente() {
+    public GerenciarClientes testExcluirClienteInexistente() {
         when(sistema.excluirCliente(eq("12345678900"))).thenReturn(false);
         
         assertFalse(GerenciarClientes.excluirCliente(sistema, "12345678900"));
@@ -81,7 +81,7 @@ public class TesteUnitario {
     }
     
     @Test
-    public void testListarClientesVazio() {
+    public Cliente testListarClientesVazio() {
         List<Cliente> clientes = new ArrayList<>();
         when(sistema.listarClientes()).thenReturn(clientes);
         
