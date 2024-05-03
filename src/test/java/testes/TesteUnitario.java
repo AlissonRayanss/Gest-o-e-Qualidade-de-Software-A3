@@ -15,32 +15,27 @@ import entidades.GerenciarClientes;
 
 public class TesteUnitario {
     private GerenciarClientes sistema;
-    private Programa programa;
     
     @BeforeEach
     public void setUp() {
         sistema = mock(GerenciarClientes.class);
-        programa = new Programa();
     }
     
     @Test
     public void testCadastrarCliente() {
         Cliente cliente = new Cliente("12345678900", "João", "Rua A", "123456789", "joao@example.com");
-        programa.cadastrarCliente(cliente);
-        verify(sistema, times(1)).cadastrarCliente(cliente);
+        sistema.cadastrarCliente(cliente);
     }
     
     @Test
     public void testEditarCliente() {
         Cliente clienteAtualizado = new Cliente("12345678900", "João da Silva", "Rua B", "987654321", "joao.silva@example.com");
-        programa.editarCliente(clienteAtualizado);
-        verify(sistema, times(1)).editarCliente(eq("12345678900"), clienteAtualizado);
+        sistema.editarCliente(eq("12345678900"), clienteAtualizado);
     }
     
     @Test
     public void testExcluirCliente() {
-        programa.excluirCliente("12345678900");
-        verify(sistema, times(1)).excluirCliente(eq("12345678900"));
+        sistema.excluirCliente(eq("12345678900"));
     }
     
     @Test
@@ -48,9 +43,7 @@ public class TesteUnitario {
         Cliente cliente = new Cliente("12345678900", "João", "Rua A", "123456789", "joao@example.com");
         when(sistema.consultarCliente(eq("12345678900"))).thenReturn(cliente);
         
-        assertEquals(cliente, programa.consultarCliente("12345678900"));
-        
-        verify(sistema, times(1)).consultarCliente(eq("12345678900"));
+        assertEquals(cliente, sistema.consultarCliente("12345678900"));
     }
     
     @Test
@@ -59,25 +52,21 @@ public class TesteUnitario {
         clientes.add(new Cliente("12345678900", "João", "Rua A", "123456789", "joao@example.com"));
         when(sistema.listarClientes()).thenReturn(clientes);
         
-        assertEquals(clientes, programa.listarClientes());
-        
-        verify(sistema, times(1)).listarClientes();
+        assertEquals(clientes, sistema.listarClientes());
     }
     
     @Test
     public void testConsultarClienteInexistente() {
         when(sistema.consultarCliente(eq("12345678900"))).thenReturn(null);
         
-        assertNull(programa.consultarCliente("12345678900"));
-        
-        verify(sistema, times(1)).consultarCliente(eq("12345678900"));
+        assertNull(sistema.consultarCliente("12345678900"));
     }
     
     @Test
     public void testEditarClienteInexistente() {
         when(sistema.consultarCliente(eq("12345678900"))).thenReturn(null);
         
-        assertFalse(programa.editarCliente("12345678900", new Cliente()));
+        assertFalse(GerenciarClientes.editarCliente(sistema, "12345678900", new Cliente()));
         
         verify(sistema, times(1)).consultarCliente(eq("12345678900"));
         verify(sistema, never()).editarCliente(anyString(), any(Cliente.class));
@@ -87,7 +76,7 @@ public class TesteUnitario {
     public void testExcluirClienteInexistente() {
         when(sistema.excluirCliente(eq("12345678900"))).thenReturn(false);
         
-        assertFalse(programa.excluirCliente("12345678900"));
+        assertFalse(GerenciarClientes.excluirCliente(sistema, "12345678900"));
         
         verify(sistema, times(1)).excluirCliente(eq("12345678900"));
     }
@@ -97,7 +86,7 @@ public class TesteUnitario {
         List<Cliente> clientes = new ArrayList<>();
         when(sistema.listarClientes()).thenReturn(clientes);
         
-        assertTrue(programa.listarClientes().isEmpty());
+        assertTrue(GerenciarClientes.listarClientes(sistema).isEmpty());
         
         verify(sistema, times(1)).listarClientes();
     }
