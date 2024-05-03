@@ -45,21 +45,21 @@ public class TesteUnitario {
     
     @Test
     public void testExcluirCliente() {
-        when(sistema.excluirCliente("12345678900")).thenReturn(true);
+        when(sistema.excluirCliente(eq("12345678900"))).thenReturn(true);
         
         assertTrue(GerenciarClientes.excluirCliente(sistema, "12345678900"));
         
-        verify(sistema, times(1)).excluirCliente("12345678900");
+        verify(sistema, times(1)).excluirCliente(eq("12345678900"));
     }
     
     @Test
     public void testConsultarCliente() {
         Cliente cliente = new Cliente("12345678900", "João", "Rua A", "123456789", "joao@example.com");
-        when(sistema.consultarCliente("12345678900")).thenReturn(cliente);
+        when(sistema.consultarCliente(eq("12345678900"))).thenReturn(cliente);
         
         assertEquals(cliente, GerenciarClientes.consultarCliente(sistema, "12345678900"));
         
-        verify(sistema, times(1)).consultarCliente("12345678900");
+        verify(sistema, times(1)).consultarCliente(eq("12345678900"));
     }
     
     @Test
@@ -75,30 +75,30 @@ public class TesteUnitario {
     
     @Test
     public void testConsultarClienteInexistente() {
-        when(sistema.consultarCliente("12345678900")).thenReturn(null);
+        when(sistema.consultarCliente(eq("12345678900"))).thenReturn(null);
         
         assertNull(GerenciarClientes.consultarCliente(sistema, "12345678900"));
         
-        verify(sistema, times(1)).consultarCliente("12345678900");
+        verify(sistema, times(1)).consultarCliente(eq("12345678900"));
     }
     
     @Test
     public void testEditarClienteInexistente() {
-        when(sistema.consultarCliente("12345678900")).thenReturn(null);
+        when(sistema.consultarCliente(eq("12345678900"))).thenReturn(null);
         
         assertFalse(GerenciarClientes.editarCliente(sistema, "12345678900", new Cliente()));
         
-        verify(sistema, times(1)).consultarCliente("12345678900");
+        verify(sistema, times(1)).consultarCliente(eq("12345678900"));
         verify(sistema, never()).editarCliente(anyString(), any(Cliente.class));
     }
     
     @Test
     public void testExcluirClienteInexistente() {
-        when(sistema.excluirCliente("12345678900")).thenReturn(false);
+        when(sistema.excluirCliente(eq("12345678900"))).thenReturn(false);
         
         assertFalse(GerenciarClientes.excluirCliente(sistema, "12345678900"));
         
-        verify(sistema, times(1)).excluirCliente("12345678900");
+        verify(sistema, times(1)).excluirCliente(eq("12345678900"));
     }
     
     @Test
