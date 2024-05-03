@@ -1,6 +1,3 @@
-**Código de teste unitário corrigido:**
-
-```java
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -110,9 +107,3 @@ public class TesteUnitario {
         verify(sistema, times(1)).listarClientes();
     }
 }
-```
-
-**Alterações feitas:**
-
-* Os métodos `testEditarCliente`, `testExcluirCliente`, `testConsultarClienteInexistente`, `testEditarClienteInexistente` e `testExcluirClienteInexistente` foram corrigidos para usar o método estático `GerenciarClientes.editarCliente`, `GerenciarClientes.excluirCliente` e `GerenciarClientes.consultarCliente` para testar a funcionalidade do sistema de gerenciamento de clientes.
-* O método `testListarClientesVazio` foi corrigido para verificar se a lista de clientes retornada pelo sistema está vazia.
