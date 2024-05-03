@@ -2,32 +2,36 @@ package entidades;
 
 import java.util.ArrayList;
 import java.util.List;
-
-public class GerenciarClientes {
-    private List<Cliente> clientes;
-
+    
     public GerenciarClientes() {
         clientes = new ArrayList<>();
     }
-
+    
     public void cadastrarCliente(Cliente cliente) {
         clientes.add(cliente);
     }
-
-    public void editarCliente(String cpf, Cliente novoCliente) {
-        for (int i = 0; i < clientes.size(); i++) {
-            Cliente cliente = clientes.get(i);
-            if (cliente.getCpf().equals(cpf)) {
-                clientes.set(i, novoCliente);
-                break;
-            }
+    
+    public boolean editarCliente(String cpf, Cliente clienteAtualizado) {
+        Cliente cliente = consultarCliente(cpf);
+        if (cliente != null) {
+            cliente.setNome(clienteAtualizado.getNome());
+            cliente.setEndereco(clienteAtualizado.getEndereco());
+            cliente.setTelefone(clienteAtualizado.getTelefone());
+            cliente.setEmail(clienteAtualizado.getEmail());
+            return true;
         }
+        return false;
     }
-
-    public void excluirCliente(String cpf) {
-        clientes.removeIf(cliente -> cliente.getCpf().equals(cpf));
+    
+    public boolean excluirCliente(String cpf) {
+        Cliente cliente = consultarCliente(cpf);
+        if (cliente != null) {
+            clientes.remove(cliente);
+            return true;
+        }
+        return false;
     }
-
+    
     public Cliente consultarCliente(String cpf) {
         for (Cliente cliente : clientes) {
             if (cliente.getCpf().equals(cpf)) {
@@ -36,13 +40,8 @@ public class GerenciarClientes {
         }
         return null;
     }
-
-    public void listarClientes() {
-        for (Cliente cliente : clientes) {
-            System.out.println("CPF: " + cliente.getCpf());
-            System.out.println("Nome: " + cliente.getNome());
-            System.out.println("Telefone: " + cliente.getTelefone());
-            System.out.println();
-        }
+    
+    public List<Cliente> listarClientes() {
+        return clientes;
     }
 }
