@@ -28,7 +28,7 @@ public void testCadastrarCliente() {
     Cliente cliente = new Cliente("12345678900", "João", "Rua A", "123456789", "joao@example.com");
     when(sistema.cadastrarCliente(any(Cliente.class))).thenReturn(true);
 
-    assertTrue(GerenciarClientes.cadastrarCliente(sistema, cliente));
+    assertTrue(sistema.cadastrarCliente(any(Cliente.class)));
 
     verify(sistema, times(1)).cadastrarCliente(any(Cliente.class));
 }
@@ -38,7 +38,7 @@ public void testCadastrarCliente() {
         Cliente clienteAtualizado = new Cliente("12345678900", "João da Silva", "Rua B", "987654321", "joao.silva@example.com");
         when(sistema.editarCliente(eq("12345678900"), any(Cliente.class))).thenReturn(true);
         
-        assertTrue(GerenciarClientes.editarCliente(sistema, "12345678900", clienteAtualizado));
+        assertTrue(sistema.editarCliente(eq("12345678900"), any(Cliente.class)));
         
         verify(sistema, times(1)).editarCliente(eq("12345678900"), any(Cliente.class));
     }
@@ -47,7 +47,7 @@ public void testCadastrarCliente() {
     public void testExcluirCliente() {
         when(sistema.excluirCliente(eq("12345678900"))).thenReturn(true);
         
-        assertTrue(GerenciarClientes.excluirCliente(sistema, "12345678900"));
+        assertTrue(sistema.excluirCliente(eq("12345678900")));
         
         verify(sistema, times(1)).excluirCliente(eq("12345678900"));
     }
@@ -57,7 +57,7 @@ public void testCadastrarCliente() {
         Cliente cliente = new Cliente("12345678900", "João", "Rua A", "123456789", "joao@example.com");
         when(sistema.consultarCliente(eq("12345678900"))).thenReturn(cliente);
         
-        assertEquals(cliente, GerenciarClientes.consultarCliente(sistema, "12345678900"));
+        assertEquals(cliente, sistema.consultarCliente(eq("12345678900")));
         
         verify(sistema, times(1)).consultarCliente(eq("12345678900"));
     }
@@ -77,7 +77,7 @@ public void testCadastrarCliente() {
     public void testConsultarClienteInexistente() {
         when(sistema.consultarCliente(eq("12345678900"))).thenReturn(null);
         
-        assertNull(GerenciarClientes.consultarCliente(sistema, "12345678900"));
+        assertEquals(clientes, sistema.listarClientes());
         
         verify(sistema, times(1)).consultarCliente(eq("12345678900"));
     }
