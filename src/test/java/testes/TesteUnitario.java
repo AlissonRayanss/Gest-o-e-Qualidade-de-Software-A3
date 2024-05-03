@@ -84,7 +84,7 @@ public class TesteUnitario {
         assertFalse(sistema.editarCliente("12345678900", new Cliente()));
         
         verify(sistema, times(1)).consultarCliente("12345678900");
-        verify(sistema, never()).editarCliente(anyString(), any(Cliente.class));
+        verify(sistema, never()).editarCliente(anyString(), any());
     }
     
     @Test
