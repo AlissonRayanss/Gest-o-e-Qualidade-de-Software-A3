@@ -15,7 +15,7 @@ public class TesteUnitario {
     
     @BeforeEach
     public void setUp() {
-        sistema = mock(GerenciarClientes.class);
+        sistema = new GerenciarClientes(); // Inicializa o objeto GerenciarClientes
     }
     
     @Test
@@ -23,87 +23,58 @@ public class TesteUnitario {
         Cliente cliente = new Cliente("12345678900", "João", "Rua A", "123456789", "joao@example.com");
         sistema.cadastrarCliente(cliente);
         
-        verify(sistema, times(1)).cadastrarCliente(cliente);
+        assertNotNull(sistema.consultarCliente("12345678900")); // Verifica se o cliente foi cadastrado corretamente
     }
     
     @Test
     public void testEditarCliente() {
         Cliente clienteAtualizado = new Cliente("12345678900", "João da Silva", "Rua B", "987654321", "joao.silva@example.com");
-        when(sistema.consultarCliente("12345678900")).thenReturn(new Cliente("12345678900", "João", "Rua A", "123456789", "joao@example.com"));
+        sistema.cadastrarCliente(new Cliente("12345678900", "João", "Rua A", "123456789", "joao@example.com"));
         
-        assertTrue(sistema.editarCliente("12345678900", clienteAtualizado));
-        
-        verify(sistema, times(1)).consultarCliente("12345678900");
-        verify(sistema, times(1)).editarCliente("12345678900", clienteAtualizado);
+        assertTrue(sistema.editarCliente("12345678900", clienteAtualizado)); // Verifica se o cliente foi editado corretamente
     }
     
     @Test
     public void testExcluirCliente() {
-        when(sistema.consultarCliente("12345678900")).thenReturn(new Cliente("12345678900", "João", "Rua A", "123456789", "joao@example.com"));
+        sistema.cadastrarCliente(new Cliente("12345678900", "João", "Rua A", "123456789", "joao@example.com"));
         
-        assertTrue(sistema.excluirCliente("12345678900"));
-        
-        verify(sistema, times(1)).consultarCliente("12345678900");
-        verify(sistema, times(1)).excluirCliente("12345678900");
+        assertTrue(sistema.excluirCliente("12345678900")); // Verifica se o cliente foi excluído corretamente
     }
     
     @Test
     public void testConsultarCliente() {
         Cliente cliente = new Cliente("12345678900", "João", "Rua A", "123456789", "joao@example.com");
-        when(sistema.consultarCliente("12345678900")).thenReturn(cliente);
+        sistema.cadastrarCliente(cliente);
         
-        assertEquals(cliente, sistema.consultarCliente("12345678900"));
-        
-        verify(sistema, times(1)).consultarCliente("12345678900");
+        assertEquals(cliente, sistema.consultarCliente("12345678900")); // Verifica se o cliente foi consultado corretamente
     }
     
     @Test
     public void testListarClientes() {
         List<Cliente> clientes = new ArrayList<>();
         clientes.add(new Cliente("12345678900", "João", "Rua A", "123456789", "joao@example.com"));
-        when(sistema.listarClientes()).thenReturn(clientes);
+        sistema.cadastrarCliente(clientes.get(0));
         
-        assertEquals(clientes, sistema.listarClientes());
-        
-        verify(sistema, times(1)).listarClientes();
+        assertEquals(clientes, sistema.listarClientes()); // Verifica se a lista de clientes está correta
     }
     
     @Test
     public void testConsultarClienteInexistente() {
-        when(sistema.consultarCliente("12345678900")).thenReturn(null);
-        
-        assertNull(sistema.consultarCliente("12345678900"));
-        
-        verify(sistema, times(1)).consultarCliente("12345678900");
+        assertNull(sistema.consultarCliente("12345678900")); // Verifica se um cliente inexistente retorna null ao ser consultado
     }
     
     @Test
     public void testEditarClienteInexistente() {
-        when(sistema.consultarCliente("12345678900")).thenReturn(null);
-        
-        assertFalse(sistema.editarCliente("12345678900", new Cliente()));
-        
-        verify(sistema, times(1)).consultarCliente("12345678900");
-        verify(sistema, never()).editarCliente(anyString(), any());
+        assertFalse(sistema.editarCliente("12345678900", new Cliente())); // Verifica se editar um cliente inexistente retorna false
     }
     
     @Test
     public void testExcluirClienteInexistente() {
-        when(sistema.consultarCliente("12345678900")).thenReturn(null);
-        
-        assertFalse(sistema.excluirCliente("12345678900"));
-        
-        verify(sistema, times(1)).consultarCliente("12345678900");
-        verify(sistema, never()).excluirCliente(anyString());
+        assertFalse(sistema.excluirCliente("12345678900")); // Verifica se excluir um cliente inexistente retorna false
     }
     
     @Test
     public void testListarClientesVazio() {
-        List<Cliente> clientes = new ArrayList<>();
-        when(sistema.listarClientes()).thenReturn(clientes);
-        
-        assertTrue(sistema.listarClientes().isEmpty());
-        
-        verify(sistema, times(1)).listarClientes();
+        assertTrue(sistema.listarClientes().isEmpty()); // Verifica se a lista de clientes está vazia
     }
 }
