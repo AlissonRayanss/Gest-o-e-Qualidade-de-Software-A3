@@ -27,21 +27,21 @@ public class TesteUnitario {
     }
     
     @Test
-    public void testEditarCliente() {
+public void testEditarCliente() {
     Cliente clienteAtualizado = new Cliente("12345678900", "João da Silva", "Rua B", "987654321", "joao.silva@example.com");
     when(sistema.consultarCliente("12345678900")).thenReturn(new Cliente("12345678900", "João", "Rua A", "123456789", "joao@example.com"));
 
-    assertTrue(sistema.editarCliente("12345678900", clienteAtualizado)); 
+    sistema.editarCliente("12345678900", clienteAtualizado); // Não é necessário usar assertTrue para métodos void
 
     verify(sistema, times(1)).consultarCliente("12345678900");
     verify(sistema, times(1)).editarCliente("12345678900", clienteAtualizado);
 }
 
-    @Test
-    public void testExcluirCliente() {
+@Test
+public void testExcluirCliente() {
     when(sistema.consultarCliente("12345678900")).thenReturn(new Cliente("12345678900", "João", "Rua A", "123456789", "joao@example.com"));
 
-    assertTrue(sistema.excluirCliente("12345678900")); 
+    sistema.excluirCliente("12345678900"); // Não é necessário usar assertTrue para métodos void
 
     verify(sistema, times(1)).consultarCliente("12345678900");
     verify(sistema, times(1)).excluirCliente("12345678900");
