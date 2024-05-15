@@ -39,7 +39,7 @@ public class GerenciarClientesTest {
 
     @Test
 public void testEditarCliente() {
-    GerenciadorDeClientes gerenciadorMock = mock(GerenciadorDeClientes.class);
+    GerenciarClientes gerenciadorMock = mock(ProgramaTeste.class);
 
     Cliente clienteAntigo = new Cliente("123456789", "Fulano", "Rua A", 1234567890, "fulano@example.com");
     Cliente clienteNovo = new Cliente("123456789", "Beltrano", "Rua B", 987654321, "beltrano@example.com");
@@ -54,7 +54,7 @@ public void testEditarCliente() {
 
     @Test
 public void testExcluirCliente() {
-    GerenciadorDeClientes gerenciadorMock = mock(GerenciadorDeClientes.class);
+    GerenciarClientes gerenciadorMock = mock(ProgramaTeste.class);
     
     Cliente cliente = new Cliente("123456789", "Fulano", "Rua A", 1234567890, "fulano@example.com");
 
@@ -68,7 +68,7 @@ public void testExcluirCliente() {
 
     @Test
 public void testConsultarCliente() {
-    GerenciadorDeClientes gerenciadorMock = mock(GerenciadorDeClientes.class);
+    GerenciarClientes gerenciadorMock = mock(ProgramaTeste.class);
 
     Cliente cliente = new Cliente("123456789", "Fulano", "Rua A", 1234567890, "fulano@example.com");
 
@@ -82,7 +82,7 @@ public void testConsultarCliente() {
 
     @Test
 public void testListarClientes() {
-    GerenciadorDeClientes gerenciadorMock = mock(GerenciadorDeClientes.class);
+    GerenciarClientes gerenciadorMock = mock(ProgramaTeste.class);
 
     Cliente cliente1 = new Cliente("123456789", "Fulano", "Rua A", 1234567890, "fulano@example.com");
     Cliente cliente2 = new Cliente("987654321", "Beltrano", "Rua B", 987654321, "beltrano@example.com");
@@ -100,7 +100,7 @@ public void testListarClientes() {
 
     @Test
 public void testConsultarClienteInexistente() {
-    GerenciadorDeClientes gerenciadorMock = mock(GerenciadorDeClientes.class);
+    GerenciarClientes gerenciadorMock = mock(ProgramaTeste.class);
 
     gerenciadorMock.consultarCliente("999999999");
     verify(gerenciadorMock).consultarCliente("999999999");
@@ -110,7 +110,7 @@ public void testConsultarClienteInexistente() {
 
     @Test
 public void testEditarClienteInexistente() {
-    GerenciadorDeClientes gerenciadorMock = mock(GerenciadorDeClientes.class);
+    GerenciarClientes gerenciadorMock = mock(ProgramaTeste.class);
 
     Cliente clienteMock = mock(Cliente.class);
 
@@ -122,7 +122,7 @@ public void testEditarClienteInexistente() {
 
     @Test
 public void testExcluirClienteInexistente() {
-    GerenciadorDeClientes gerenciadorMock = mock(GerenciadorDeClientes.class);
+    GerenciarClientes gerenciadorMock = mock(ProgramaTeste.class);
 
     gerenciadorMock.excluirCliente("999999999");
     verify(gerenciadorMock).excluirCliente("999999999");
@@ -132,7 +132,7 @@ public void testExcluirClienteInexistente() {
 
     @Test
 public void testListarClientesVazio() {
-    GerenciadorDeClientes gerenciadorMock = mock(GerenciadorDeClientes.class);
+    GerenciarClientes gerenciadorMock = mock(ProgramaTeste.class);
 
     gerenciadorMock.listarClientes();
     verify(gerenciadorMock).listarClientes();
