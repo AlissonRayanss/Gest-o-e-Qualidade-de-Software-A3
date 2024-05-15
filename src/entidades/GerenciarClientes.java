@@ -14,32 +14,18 @@ public class GerenciarClientes {
         clientes.add(cliente);
     }
 
-    public boolean editarCliente(String cpf, Cliente clienteAtualizado) {
-        for (Cliente cliente : clientes) {
+    public void editarCliente(String cpf, Cliente novoCliente) {
+        for (int i = 0; i < clientes.size(); i++) {
+            Cliente cliente = clientes.get(i);
             if (cliente.getCpf().equals(cpf)) {
-                cliente.setNome(clienteAtualizado.getNome());
-                cliente.setEndereco(clienteAtualizado.getEndereco());
-                cliente.setTelefone(clienteAtualizado.getTelefone());
-                cliente.setEmail(clienteAtualizado.getEmail());
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean excluirCliente(String cpf) {
-        Cliente clienteParaRemover = null;
-        for (Cliente cliente : clientes) {
-            if (cliente.getCpf().equals(cpf)) {
-                clienteParaRemover = cliente;
+                clientes.set(i, novoCliente);
                 break;
             }
         }
-        if (clienteParaRemover != null) {
-            clientes.remove(clienteParaRemover);
-            return true;
-        }
-        return false;
+    }
+
+    public void excluirCliente(String cpf) {
+        clientes.removeIf(cliente -> cliente.getCpf().equals(cpf));
     }
 
     public Cliente consultarCliente(String cpf) {
@@ -51,7 +37,12 @@ public class GerenciarClientes {
         return null;
     }
 
-    public List<Cliente> listarClientes() {
-        return clientes;
+    public void listarClientes() {
+        for (Cliente cliente : clientes) {
+            System.out.println("CPF: " + cliente.getCpf());
+            System.out.println("Nome: " + cliente.getNome());
+            System.out.println("Telefone: " + cliente.getTelefone());
+            System.out.println();
+        }
     }
 }
