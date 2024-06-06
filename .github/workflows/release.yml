@@ -60,7 +60,7 @@ jobs:
       run: mvn test -Dtest=ProgramaTesteUnitario
 
     - name: Run integration tests
-      run: mvn verify
+      run: mvn test -Dtest=TesteIntegracao
 
     - name: Generate JaCoCo Report
       run: mvn jacoco:report
