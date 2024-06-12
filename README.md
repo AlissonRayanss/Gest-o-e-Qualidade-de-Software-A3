@@ -30,12 +30,14 @@ Você pode acessar a análise estática do projeto no SonarCloud através do seg
 ## Autor
 
 Este projeto foi desenvolvido por:
-Pedro Lima Lopes;
-Luan Fernando Azevedo Barreto;
-samuel moura da silva;
-Wesley Cristian Carvalho Dantas;
-Davi de Sena Barbosa Silva;
-Alisson Rayan Santos de souza;
-Felipe Checcucci Ribeiro Rangel;
-Ludmila Silva Santos;
+
+- Pedro Lima Lopes
+- Luan Fernando Azevedo Barreto
+- Samuel Moura da Silva
+- Wesley Cristian Carvalho Dantas
+- Davi de Sena Barbosa Silva
+- Alisson Rayan Santos de Souza
+- Felipe Checcucci Ribeiro Rangel
+- Ludmila Silva Santos
+
 como parte do projeto de Gestão e Qualidade de Software.
