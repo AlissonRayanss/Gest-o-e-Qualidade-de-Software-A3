@@ -19,11 +19,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: actions/setup-java@v3
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
         with:
-          java-version: '17'
-          distribution: 'temurin'
-          cache: 'maven'
+          java-version: '11'
 
       - run: |
           commit_message=$(git log -1 --pretty=format:"%s")
@@ -36,11 +35,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: actions/setup-java@v3
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
         with:
-          java-version: '17'
-          distribution: 'temurin'
-          cache: 'maven'
+          java-version: '11'
 
       - run: mvn -B package --file pom.xml
 
@@ -51,11 +49,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: actions/setup-java@v3
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
         with:
-          java-version: '17'
-          distribution: 'temurin'
-          cache: 'maven'
+          java-version: '11'
 
       - run: mvn test -Dtest=ProgramaTesteUnitario
 
@@ -66,23 +63,24 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: actions/setup-java@v3
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
         with:
-          java-version: '17'
-          distribution: 'temurin'
-          cache: 'maven'
+          java-version: '11'
 
       - uses: actions/cache@v2
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
 
-      - run: |
+      - name: Install SonarScanner
+        run: |
           curl -sSLo /tmp/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip
           unzip /tmp/sonar-scanner.zip -d ~/.sonar/
           echo 'export PATH="$PATH:$HOME/.sonar/sonar-scanner-4.6.2.2472-linux/bin"' >> $GITHUB_ENV
 
-      - env:
+      - name: Run SonarScanner
+        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
