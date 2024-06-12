@@ -48,8 +48,6 @@ jobs:
 
       - name: Create new tag
         if: env.new_tag != env.latest_tag
-        env:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         run: |
           NEW_TAG=${{ env.new_tag }}
           git tag $NEW_TAG
