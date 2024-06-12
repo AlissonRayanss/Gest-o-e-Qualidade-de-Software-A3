@@ -90,3 +90,5 @@ jobs:
             -Dsonar.organization=alissonrayanss \
             -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.login=$SONAR_TOKEN
+            sonar-scanner \
+            -Dsonar.java.binaries=target
