@@ -1,0 +1,54 @@
+name: Automatic Versioning
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  versioning:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Git
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+
+      - name: Get the latest tag
+        id: get_latest_tag
+        run: echo "latest_tag=$(git describe --tags --abbrev=0 --always || echo '0.0.0')" >> $GITHUB_ENV
+
+      - name: Determine new version
+        id: determine_version
+        run: |
+          LATEST_TAG=${{ env.latest_tag }}
+          echo "Latest tag: $LATEST_TAG"
+          VERSION_PART="${{ github.event.head_commit.message }}"
+          
+          # Extract version parts
+          MAJOR=$(echo $LATEST_TAG | cut -d. -f1)
+          MINOR=$(echo $LATEST_TAG | cut -d. -f2)
+          PATCH=$(echo $LATEST_TAG | cut -d. -f3)
+
+          if [[ "$VERSION_PART" =~ ^feat ]]; then
+            MINOR=$((MINOR + 1))
+            PATCH=0
+          elif [[ "$VERSION_PART" =~ ^fix ]]; then
+            PATCH=$((PATCH + 1))
+          fi
+
+          NEW_TAG="$MAJOR.$MINOR.$PATCH"
+          echo "New version: $NEW_TAG"
+          echo "new_tag=$NEW_TAG" >> $GITHUB_ENV
+
+      - name: Create new tag
+        if: env.new_tag != env.latest_tag
+        run: |
+          NEW_TAG=${{ env.new_tag }}
+          git tag $NEW_TAG
+          git push origin $NEW_TAG
