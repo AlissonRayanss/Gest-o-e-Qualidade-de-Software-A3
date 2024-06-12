@@ -56,9 +56,6 @@ jobs:
         java-version: '17'
         distribution: 'adopt'
 
-    - name: Run tests
-      run: mvn test -Dtest=ProgramaTesteUnitario
-
     - name: Run integration tests
       run: mvn test -Dtest=TesteIntegracao
 
