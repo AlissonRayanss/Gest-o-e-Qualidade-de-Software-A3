@@ -5,10 +5,12 @@ on:
     branches:
       - main
       - developer
+      - release
   pull_request:
     branches:
       - main
       - developer
+      - release
 
 jobs:
   Preflight:
