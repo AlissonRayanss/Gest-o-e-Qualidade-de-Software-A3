@@ -13,8 +13,6 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jacoco.version>0.8.6</jacoco.version>
-        <!-- SonarQube/SonarCloud plugin version -->
-        <sonar.plugin.version>4.0.0.4121</sonar.plugin.version>
     </properties>
 
     <dependencies>
@@ -112,13 +110,6 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
-
-            <!-- SonarQube/SonarCloud plugin -->
-            <plugin>
-                <groupId>org.sonarsource.scanner.maven</groupId>
-                <artifactId>sonar-maven-plugin</artifactId>
-                <version>${sonar.plugin.version}</version>
             </plugin>
         </plugins>
     </build>
