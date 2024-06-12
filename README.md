@@ -31,13 +31,13 @@ Você pode acessar a análise estática do projeto no SonarCloud através do seg
 
 Este projeto foi desenvolvido por:
 
-- Pedro Lima Lopes
-- Luan Fernando Azevedo Barreto
-- Samuel Moura da Silva
-- Wesley Cristian Carvalho Dantas
-- Davi de Sena Barbosa Silva
-- Alisson Rayan Santos de Souza
-- Felipe Checcucci Ribeiro Rangel
-- Ludmila Silva Santos
+- Pedro Lima Lopes - 1272018234
+- Luan Fernando Azevedo Barreto – 12723211455
+- samuel moura da silva – 12722129904
+- Wesley Cristian Carvalho Dantas – 1272311443
+- Davi de Sena Barbosa Silva – 12722130689
+- Alisson Rayan Santos de souza – 1272314418
+- Felipe Checcucci Ribeiro Rangel - 12722211197
+- Ludmila Silva Santos-12724131626
 
 como parte do projeto de Gestão e Qualidade de Software.
