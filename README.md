@@ -26,6 +26,7 @@ O projeto incorpora diversas práticas de qualidade de software para garantir su
 ## Acesso à Análise do Projeto
 
 Você pode acessar a análise estática do projeto no SonarCloud através do seguinte link: [Análise no SonarCloud](https://sonarcloud.io/project/overview?id=AlissonRayanss_Gestao-e-Qualidade-de-Software-A3)
+[Video de apresentação do projeto](https://youtu.be/7IRj0XEdBa8)
  
 ## Autor
 
